@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+src 디렉터리 구조
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+├─asset ( 정적인 자원 )
+├─common ( 공통 모듈 )
+│  └─api ( axios default 설정 )
+├─components
+│  ├─atoms ( 자주 쓰이는 아주 조그만 단위 ex, Button Components.. )
+│  ├─blocks ( 자주 쓰이는 
+│  ├─config
+│  └─pages
+│      ├─Infomation
+│      ├─Layout
+│      └─Login
+├─ducks
+└─styles ( css in javascript 방식)
+    ├─atoms
+    ├─blocks
+    ├─common
+    └─pages
+        ├─infomation
+        ├─layout
+        └─login
 
-## Available Scripts
+< WHY CSS in JS ? > 
 
-In the project directory, you can run:
+1. 스타일시트의 묶음을 유지보수 할 자원을 할당하고 싶지 않음.
 
-### `npm start`
+2. 복잡한 애플리케이션 내에서 선택자 충돌을 피할 수 없는 경우가 있고 BEM과 같은 네이밍 컨벤션은 한 프로젝트 내에서는 도움이 되지만, 서드파티 코드를 통합할 때는 도움이 되지 않는다. 따라서 CSS를 컴파일 할 때, 기본적으로 고유한 이름을 생성 하는 방식을 채택.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+3.흔히 사용하는 Sass 는 파일이 늘어날수록 관리도 쉽지않고 문어다발식 import가 될 시 빌드 시간도 비약적으로 늘어날 뿐더러 애초에 관리를 해야된다는 리소스 자체가 부담
