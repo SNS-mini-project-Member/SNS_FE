@@ -13,13 +13,13 @@ src 디렉터리 구조
 │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─Login<br/>
 ├─ducks ( redux config.. )<br/>
 └─styles ( CSS in JS )<br/>
-&nbsp;├─atoms<br/>
-&nbsp;├─blocks<br/>
-&nbsp;├─common<br/>
-&nbsp;└─pages<br/>
-&nbsp;&nbsp;├─infomation<br/>
-&nbsp;&nbsp;├─layout<br/>
-&nbsp;&nbsp;└─login<br/>
+&nbsp;&nbsp;&nbsp;├─atoms<br/>
+&nbsp;&nbsp;&nbsp;├─blocks<br/>
+&nbsp;&nbsp;&nbsp;├─common<br/>
+&nbsp;&nbsp;&nbsp;└─pages<br/>
+&nbsp;&nbsp;&nbsp;├─infomation<br/>
+&nbsp;&nbsp;&nbsp;├─layout<br/>
+&nbsp;&nbsp;&nbsp;└─login<br/>
 
 < WHY CSS in JS ? > 
 
