@@ -1,6 +1,6 @@
 src 디렉터리 구조
 
-├─asset ( 정적인 자원 ) /n
+├─asset ( 정적인 자원 )  
 ├─common ( 공통 모듈 )
 │  └─api ( axios default 설정 )
 ├─components
