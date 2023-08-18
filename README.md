@@ -1,8 +1,8 @@
 src 디렉터리 구조
 
-├─asset ( 정적인 자원 )  
-├─common ( 공통 모듈 )
-│  └─api ( axios default 설정 )
+├─asset ( 정적인 자원 )<br/>
+├─common ( 공통 모듈 )<br/>
+│  └─api ( axios default 설정 )<br/>
 ├─components
 │  ├─atoms ( 자주 쓰이는 아주 조그만 단위 ex, Button Components.. )
 │  ├─blocks ( 자주 쓰이는 
