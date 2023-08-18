@@ -6,20 +6,20 @@ src 디렉터리 구조
 ├─components<br/>
 │&nbsp;&nbsp;├─atoms ( 자주 쓰이는 아주 조그만 단위 ex, Button Components.. )<br/>
 │&nbsp;&nbsp;├─blocks ( atoms 보다 큰 단위 )<br/>
-│  ├─config ( 설정 현재는 Responsive config.. )<br/>
-│  └─pages<br/>
-│      ├─Infomation<br/>
-│      ├─Layout<br/>
-│      └─Login<br/>
+│&nbsp;&nbsp;├─config ( 설정 현재는 Responsive config.. )<br/>
+│&nbsp;&nbsp;└─pages<br/>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─Infomation<br/>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─Layout<br/>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─Login<br/>
 ├─ducks ( redux config.. )<br/>
 └─styles ( CSS in JS )<br/>
-    ├─atoms<br/>
-    ├─blocks<br/>
-    ├─common<br/>
-    └─pages<br/>
-        ├─infomation<br/>
-        ├─layout<br/>
-        └─login<br/>
+&nbsp;├─atoms<br/>
+&nbsp;├─blocks<br/>
+&nbsp;├─common<br/>
+&nbsp;└─pages<br/>
+&nbsp;&nbsp;├─infomation<br/>
+&nbsp;&nbsp;├─layout<br/>
+&nbsp;&nbsp;└─login<br/>
 
 < WHY CSS in JS ? > 
 
