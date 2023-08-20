@@ -6,6 +6,16 @@ const router = createBrowserRouter([
     path : '/',
     element : <App />,
   },
+  // {
+  //   path : '/member',
+  //   element : <HeaderSection />,
+  //   children : [
+  //     {
+  //       path: 'login',
+  //       element: <Login />,
+  //     },
+  //   ]
+  // },
 ]);
 
 export default router;
