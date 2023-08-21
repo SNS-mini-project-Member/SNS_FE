@@ -12,7 +12,8 @@ const Signup = (props) => {
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
   const nav = useNavigate();
   const [email, setEmail] = useState('');
-  const [code, setCode] = useState('')
+  const [code, setCode] = useState('');
+  const [inCode, setIncode] = useState('');
   const [users, setUsers] = useState({
     email:"",
     password:"",
@@ -21,19 +22,25 @@ const Signup = (props) => {
     age:"",
     phone:""
   });
-  const onChangeEmail = (e) =>{
-    setEmail(e.target.value)
-    console.log(email)
-  }
   const onChangeCode = (e) =>{
-    setCode(e.target.value)
+    setIncode(e.target.value)
   }
   const onChangeHandler = (e) =>{
     const {value, name} = e.target
     setUsers({...users, [name]:value})
+    setEmail(users.email+'m')
+  }
+  const onClickSend = async (e) =>{
+   emailCheck(email).then((res)=>{
+     setCode(res.data)
+   })
   }
   const onClickCheck = async (e) =>{
-    emailCheck()
+    if (code === inCode){
+      alert("인증완료")
+    }else {
+      alert("잘못된 인증번호 입니다.")
+    }
   }
   const onClickHandler = async (e) =>{
     if (users.password === users.passwordCheck){
@@ -73,16 +80,14 @@ const Signup = (props) => {
               <div className={classes.loginForm}>
                 <div className={classes.loginInnerForm}>
                   <Input onChange={onChangeHandler} name="email" focus={true} placeholder='이메일형식 ex)abcd@mail.com' type='text' />
+                  <Button onClick={onClickSend} width='364px' backColor='#1877f2' value='인증받기' />
+                  <Input onChange={onChangeCode} name="checkCode" placeholder='인증번호를 입력해주세요' type='text' />
+                  <Button onClick={onClickCheck} width='364px' backColor='#1877f2' value='확인' />
                   <Input onChange={onChangeHandler} name="password" placeholder='비밀번호' type='password' />
                   <Input onChange={onChangeHandler} name="passwordCheck" placeholder='비밀번호 확인' type='password' />
                   <Input onChange={onChangeHandler} name="name" placeholder='성함' type='text' />
                   <Input onChange={onChangeHandler} name="phone" placeholder='전화번호' type='text' />
                   <Input onChange={onChangeHandler} name="age" placeholder='띠' type='text' />
-                  <div>
-                    <Input onChange={onChangeEmail} name="checkEmail" placeholder='인증번호를 받을 email을 입력해주세요' type='text' />
-                    <Input onChange={onChangeCode} name="checkCode" placeholder='인증번호를 입력해주세요' type='text' />
-                    <Button onClick={onClickCheck} width='364px' backColor='#1877f2' value='인증받기' />
-                  </div>
                   <Button onClick={onClickHandler} width='364px' backColor='#1877f2' value='회원가입' />
                   <div className={classes.findPassArea}>
                     <p style={{borderBottom : 'none', marginTop : '5px'}} onClick={userLoginHandler} className={classes.paramOption}>이미 회원 이신가요?</p>
