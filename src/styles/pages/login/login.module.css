@@ -5,7 +5,12 @@
 }
 
 .loginArea {
-    padding-top: 72px;
+    padding-top: 90px;
+    padding-bottom: 112px;
+}
+
+.signUpArea {
+    padding-top: 40px;
     padding-bottom: 112px;
 }
 
@@ -20,7 +25,11 @@
 }
 
 .imgWrap {
-    padding: 112px 0 20px;
+    padding: 130px 0 20px;
+}
+
+.imgWrapSign {
+    padding: 180px 0 20px;
 }
 
 .logoSize {
@@ -69,8 +78,4 @@
     cursor: pointer;
     border-bottom: 1px solid #ccd0d5;
     padding-bottom: 15px;
-}
-
-.signUpArea {
-    padding: 15px 0;
 }
