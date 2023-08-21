@@ -1,7 +1,7 @@
 import {executeJwtAuthenticationTokenService} from "./api/ApiPostService";
 import {apiClient} from "./api/ApiClient";
 
-export const login = async (userId, userPwd) => {
+export const loginToken = async (userId, userPwd) => {
 
   const res = {
     loginInfo : {
