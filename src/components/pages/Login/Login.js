@@ -27,6 +27,7 @@ const Login = () => {
       alert("로그인 실패")
     })
 
+    nav('/main');
   }
 
   const signUpHandler = () => {

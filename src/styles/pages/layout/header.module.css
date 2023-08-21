@@ -1,0 +1,55 @@
+.headerWrap {
+    width: 100%;
+    height: 56px;
+    padding: 0 20px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logoArea {
+    width: 200px;
+}
+
+.menuArea {
+
+}
+
+.menuWrap {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.menuWrap li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.smallLogo{
+    height: 40px;
+    cursor: pointer;
+}
+
+.myMenuArea {
+    width: 200px;
+    display: flex;
+    gap: 15px;
+}
+
+.myMenuItem {
+    width: 40px;
+    height: 40px;
+    background: #E4E6EB;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.myMenuItem .myImg {
+    height: 40px;
+}
