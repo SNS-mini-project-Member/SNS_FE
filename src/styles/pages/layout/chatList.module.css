@@ -1,0 +1,42 @@
+.chatListWrap {
+    width: 280px;
+    height: 100vh;
+    padding: 20px;
+}
+
+.title {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.asideWrap {
+    width: 280px;
+    height: 100vh;
+    padding: 20px;
+}
+
+.imgWrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.img {
+    display: block;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.itemWrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.itemWrap:hover{
+    background: #ddd;
+}

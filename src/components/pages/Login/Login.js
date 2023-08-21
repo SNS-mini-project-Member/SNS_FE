@@ -9,6 +9,7 @@ const Login = () => {
 
   const loginHandler = () => {
 
+    nav('/main');
   }
 
   const signUpHandler = () => {
