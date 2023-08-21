@@ -5,12 +5,14 @@ import Button from "../../atoms/Button";
 import WelComeLogo from "../../blocks/WelComeLogo";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
-import {userSignup} from "../../../common/api/ApiPostService";
+import {emailCheck, userSignup} from "../../../common/api/ApiPostService";
 
 const Signup = (props) => {
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
   const nav = useNavigate();
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('')
   const [users, setUsers] = useState({
     email:"",
     password:"",
@@ -19,9 +21,19 @@ const Signup = (props) => {
     age:"",
     phone:""
   });
+  const onChangeEmail = (e) =>{
+    setEmail(e.target.value)
+    console.log(email)
+  }
+  const onChangeCode = (e) =>{
+    setCode(e.target.value)
+  }
   const onChangeHandler = (e) =>{
     const {value, name} = e.target
     setUsers({...users, [name]:value})
+  }
+  const onClickCheck = async (e) =>{
+    emailCheck()
   }
   const onClickHandler = async (e) =>{
     if (users.password === users.passwordCheck){
@@ -66,6 +78,11 @@ const Signup = (props) => {
                   <Input onChange={onChangeHandler} name="name" placeholder='성함' type='text' />
                   <Input onChange={onChangeHandler} name="phone" placeholder='전화번호' type='text' />
                   <Input onChange={onChangeHandler} name="age" placeholder='띠' type='text' />
+                  <div>
+                    <Input onChange={onChangeEmail} name="checkEmail" placeholder='인증번호를 받을 email을 입력해주세요' type='text' />
+                    <Input onChange={onChangeCode} name="checkCode" placeholder='인증번호를 입력해주세요' type='text' />
+                    <Button onClick={onClickCheck} width='364px' backColor='#1877f2' value='인증받기' />
+                  </div>
                   <Button onClick={onClickHandler} width='364px' backColor='#1877f2' value='회원가입' />
                   <div className={classes.findPassArea}>
                     <p style={{borderBottom : 'none', marginTop : '5px'}} onClick={userLoginHandler} className={classes.paramOption}>이미 회원 이신가요?</p>
