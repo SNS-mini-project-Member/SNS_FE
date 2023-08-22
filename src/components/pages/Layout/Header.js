@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 const Header = () => {
   const isMainPage = window.location.pathname;
   const nav = useNavigate();
-  const myInfo = () => {nav('/update')}
+  const myInfo = () => {nav('/myinfo')}
 
   return (
     <div style={{position : 'fixed', top: 0}} className={classes.headerWrap}>

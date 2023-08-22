@@ -9,3 +9,5 @@ export const userSignup = (email, password, name, age, phone) => apiClient.post(
 export const emailCheck = (email) => apiClient.post(`/api/v1/mail`, {email})
 
 export const sendTmpPw = (email) => apiClient.post(`/api/v1/mail/pwChange`, {email})
+
+export const updatePw = (email, password) => apiClient.post('/api/v1/users/update', {email, password})

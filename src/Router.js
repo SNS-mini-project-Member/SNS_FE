@@ -2,7 +2,7 @@ import {createBrowserRouter} from 'react-router-dom';
 import App from "./App";
 import Signup from "./components/pages/Login/Signup";
 import Main from "./components/pages/Infomation/Main";
-import Update from "./components/pages/Login/Update";
+import MyInfo from "./components/pages/Login/MyInfo";
 import SendTmpPw from "./components/pages/Login/SendTmpPw";
 
 const router = createBrowserRouter([
@@ -19,8 +19,8 @@ const router = createBrowserRouter([
     element : <Main />,
   },
   {
-    path : 'update',
-    element : <Update />,
+    path : 'myinfo',
+    element : <MyInfo />,
   },
   {
     path : 'sendTmpPw',
