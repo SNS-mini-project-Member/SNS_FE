@@ -9,7 +9,7 @@ const initialIsLoginState = {
       phone : null,
       followers_count : 0,
       followings_count : 0,
-      created_at : null,
+      createAt : null,
       token: null
   }
 }
