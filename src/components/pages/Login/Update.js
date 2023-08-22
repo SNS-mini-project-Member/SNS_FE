@@ -10,7 +10,7 @@ import SendTmpPw from "./SendTmpPw";
 //2. 비밀번호 수정 페이지 변환 ok
 //3. 임시비밀번호로 로그인하고 수정 페이지로 이동하면 수정된 페이지가 뜸.
 //4. 수정페이지에서 비밀번호 재설정 하면 수정되야함
-const PwUpdate = () => {
+const Update = () => {
   const isLogin = useSelector(state => state.loginCheck.loginInfo);
   const nav = useNavigate();
 
@@ -44,4 +44,4 @@ const PwUpdate = () => {
   );
 }
 
-export default PwUpdate;
+export default Update;

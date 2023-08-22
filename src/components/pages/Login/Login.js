@@ -55,10 +55,9 @@ const Login = () => {
                   <Input onChange={passwordHandler} placeholder='비밀번호' type='password' />
                   <Button onClick={loginHandler} width='364px' backColor='#1877f2' value='로그인' />
                   <div className={classes.findPassArea}>
-                    <p className={classes.paramOption}>비밀번호를 잊으셨나요?</p>
+                    <p className={classes.paramOption} onClick={sendPw}>비밀번호를 잊으셨나요?</p>
                   </div>
                   <div>
-                    <Button onClick={sendPw} width='250px' backColor='#42b72a' value='비밀번호를 잊으셨나요?' />
                     <Button onClick={signUpHandler} width='250px' backColor='#42b72a' value='새 계정 만들기' />
                   </div>
                 </div>
