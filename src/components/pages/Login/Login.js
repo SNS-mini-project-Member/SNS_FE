@@ -18,11 +18,9 @@ const Login = () => {
   const loginHandler = () => {
     userLogin(email, password)
     .then((res) => {
-      // 성공했으면 ..? 리덕스에 데이터를 꽂아줘야함.
       alert("로그인 성공")
       dispatch(loginCheckAction.loginInfoSet(res.data));
     }).catch((err) => {
-      // 에러났으면 ?
       console.log(err)
       alert("로그인 실패")
     })

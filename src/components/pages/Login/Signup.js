@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {emailCheck, userSignup} from "../../../common/api/ApiPostService";
 
-const Signup = (props) => {
+const Signup = () => {
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
   const nav = useNavigate();
@@ -28,27 +28,28 @@ const Signup = (props) => {
   const onChangeHandler = (e) =>{
     const {value, name} = e.target
     setUsers({...users, [name]:value})
-    setEmail(users.email+'m')
+    setEmail(e.target.value)
   }
-  const onClickSend = async (e) =>{
+  const onClickSend = (e) =>{
    emailCheck(email).then((res)=>{
      setCode(res.data)
    })
+    alert("인증번호가 발송되었습니다.")
   }
-  const onClickCheck = async (e) =>{
+  const onClickCheck = (e) =>{
     if (code === inCode){
       alert("인증완료")
     }else {
       alert("잘못된 인증번호 입니다.")
     }
   }
-  const onClickHandler = async (e) =>{
+  const onClickHandler = (e) =>{
     if (users.password === users.passwordCheck){
       if (emailRegex.test(users.email)){
         if (passwordRegex.test(users.password)){
           try {
             e.preventDefault();
-            await userSignup(users.email, users.password, users.name, users.age, users.phone)
+            userSignup(users.email, users.password, users.name, users.age, users.phone)
             nav('/')
             alert("회원가입 성공")
           }catch (error){
