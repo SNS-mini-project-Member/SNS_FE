@@ -3,8 +3,13 @@ import MainLayout from "../Layout/MainLayout";
 import AsideMenu from "../Layout/AsideMenu";
 import StoryBoard from "../Layout/StoryBoard";
 import ChatList from "../Layout/ChatList";
+import {useNavigate} from "react-router-dom";
 
 const Main = () => {
+    const nav= useNavigate();
+    const onClickBtn = () =>{
+        nav('/update')
+    }
   return (
     <>
       <Header />
