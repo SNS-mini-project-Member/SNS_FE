@@ -31,6 +31,9 @@ const Login = () => {
   const signUpHandler = () => {
     nav('/signup');
   }
+  const sendPw = () => {
+    nav('/sendTmpPw')
+  }
 
   const emailHandler = (e) => {
     setEmail(e.target.value)
@@ -55,7 +58,8 @@ const Login = () => {
                     <p className={classes.paramOption}>비밀번호를 잊으셨나요?</p>
                   </div>
                   <div>
-                    <Button onClick={signUpHandler} width='160px' backColor='#42b72a' value='새 계정 만들기' />
+                    <Button onClick={sendPw} width='250px' backColor='#42b72a' value='비밀번호를 잊으셨나요?' />
+                    <Button onClick={signUpHandler} width='250px' backColor='#42b72a' value='새 계정 만들기' />
                   </div>
                 </div>
               </div>

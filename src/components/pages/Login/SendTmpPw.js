@@ -30,10 +30,9 @@ const SendTmpPw = () => {
               <div className={classes.loginForm}>
                 <div className={classes.loginInnerForm}>
                   <div style={{textAlign:"center"}}>
-                    <p>발급받은 임시 비밀번호로 로그인 한 뒤, </p><br />
-                    <p>비밀번호를 수정해주시면 됩니다. </p>
+                    <p>회원가입시 입력했던 Email을 입력해주세요</p><br />
                   </div>
-                  <Input name="email" desabled value={isLogin.email} />
+                  <Input name="email" placeholder={"email@mail.com"} />
                   <Button onClick={onClickSend} width='364px' backColor='#1877f2' value='임시 비밀번호 발급받기' />
                 </div>
               </div>
