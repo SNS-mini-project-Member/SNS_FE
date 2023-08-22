@@ -25,10 +25,10 @@ const SendTmpPw = () => {
     <div className={classes.loginWrap}>
       <CenterLayout>
         <div className={classes.signUpArea}>
-          <div className={classes.loginAreaWrap}>
+          <div className={classes.updateLoginAreaWrap}>
             <div>
               <div className={classes.loginForm}>
-                <div className={classes.loginInnerForm}>
+                <div className={classes.updateLoginInnerForm}>
                   <div style={{textAlign:"center"}}>
                     <p>회원가입시 입력했던 Email을 입력해주세요</p><br />
                   </div>

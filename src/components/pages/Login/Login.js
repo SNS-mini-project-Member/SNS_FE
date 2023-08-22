@@ -16,16 +16,19 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const loginHandler = () => {
+
+
     userLogin(email, password)
     .then((res) => {
       alert("로그인 성공")
       dispatch(loginCheckAction.loginInfoSet(res.data));
+      nav('/main');
     }).catch((err) => {
       console.log(err)
       alert("로그인 실패")
     })
 
-    nav('/main');
+
   }
 
   const signUpHandler = () => {

@@ -70,16 +70,20 @@ const Signup = () => {
     nav('/');
   }
 
+  const userLoginHandler2 = () => {
+    nav('/sendTmpPw');
+  }
+
 
   return (
-    <div className={classes.loginWrap}>
+    <div className={classes.signupWrap}>
       <CenterLayout>
-        <div className={classes.signUpArea}>
+        <div style={{paddingTop : '0'}} className={classes.signUpArea}>
           <div className={classes.loginAreaWrap}>
             <WelComeLogo type="signup" />
             <div>
-              <div className={classes.loginForm}>
-                <div className={classes.loginInnerForm}>
+              <div className={classes.signupForm}>
+                <div style={{margin : '0'}} className={classes.loginInnerForm}>
                   <Input onChange={onChangeHandler} name="email" focus={true} placeholder='이메일형식 ex)abcd@mail.com' type='text' />
                   <Button onClick={onClickSend} width='364px' backColor='#1877f2' value='인증받기' />
                   <Input onChange={onChangeCode} name="checkCode" placeholder='인증번호를 입력해주세요' type='text' />
@@ -92,7 +96,7 @@ const Signup = () => {
                   <Button onClick={onClickHandler} width='364px' backColor='#1877f2' value='회원가입' />
                   <div className={classes.findPassArea}>
                     <p style={{borderBottom : 'none', marginTop : '5px'}} onClick={userLoginHandler} className={classes.paramOption}>이미 회원 이신가요?</p>
-                    <p style={{borderBottom : 'none', marginTop : '5px'}}  onClick={userLoginHandler} className={classes.paramOption}>비밀번호를 잊으셨나요?</p>
+                    <p style={{borderBottom : 'none', marginTop : '5px'}}  onClick={userLoginHandler2} className={classes.paramOption}>비밀번호를 잊으셨나요?</p>
                   </div>
 
                 </div>

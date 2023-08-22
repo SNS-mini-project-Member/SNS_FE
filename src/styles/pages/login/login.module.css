@@ -4,6 +4,11 @@
     height: 100vh;
 }
 
+.signupWrap {
+    background: #eff0f3;
+    width: 100%;
+}
+
 .loginArea {
     padding-top: 90px;
     padding-bottom: 112px;
@@ -17,6 +22,11 @@
 .loginAreaWrap {
     padding : 20px 0;
     display: flex;
+}
+.updateLoginAreaWrap {
+    padding : 20px 0;
+    display: flex;
+    justify-content: center;
 }
 
 .leftArea {
@@ -48,6 +58,10 @@
     width: 396px;
 }
 
+.signupForm {
+    width: 396px;
+}
+
 .loginInnerForm {
     background-color: #fff;
     border: none;
@@ -55,6 +69,16 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
     box-sizing: border-box;
     margin: 40px 0 0;
+    padding: 15px 0 10px;
+    outline: none;
+}
+
+.updateLoginInnerForm {
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+    box-sizing: border-box;
     padding: 15px 0 10px;
     outline: none;
 }
