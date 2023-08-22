@@ -1,10 +1,10 @@
 import classes from "../../../styles/pages/layout/header.module.css";
 const Header = () => {
   return (
-    <div className={classes.headerWrap}>
+    <div style={{position : 'fixed', top: 0}} className={classes.headerWrap}>
       <div className={classes.logoArea}>
         <div className={classes.logoImg}>
-          <img className={classes.smallLogo} src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/smallLogo.png?alt=media&token=71085c18-0dc3-4fb9-a115-666e473f050b" />
+          <img loading="lazy" className={classes.smallLogo} src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/smallLogo.png?alt=media&token=71085c18-0dc3-4fb9-a115-666e473f050b" />
         </div>
       </div>
       <div className={classes.menuArea}>
@@ -62,7 +62,7 @@ const Header = () => {
           </svg>
         </div>
         <div className={classes.myMenuItem}>
-          <img className={classes.myImg} src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/mypage.png?alt=media&token=a5426fe2-282d-407f-a13d-6320fcf18b00" />
+          <img loading="lazy" className={classes.myImg} src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/mypage.png?alt=media&token=a5426fe2-282d-407f-a13d-6320fcf18b00" />
         </div>
       </div>
     </div>
