@@ -21,6 +21,10 @@ const MyInfo = () => {
   const onChangePwCheck = (e) => {
     setPwCheck(e.target.value)
   }
+  const logOut = () => {
+    localStorage.clear();
+    nav('/')
+  }
   const onClickCheck = () => {
     if (passwordRegex.test(pw)) {
       if (pw === pwCheck) {
@@ -60,6 +64,7 @@ const MyInfo = () => {
                     <Input onChange={onChangePw} name="password" placeholder='비밀번호' type='password' />
                     <Input onChange={onChangePwCheck} name="passwordCheck" placeholder='비밀번호 확인' type='password' />
                     <Button onClick={onClickCheck} width='364px' backColor='#1877f2' value='비밀번호 수정하기' />
+                    <Button onClick={logOut} width='364px' backColor='#1877f2' value='로그아웃' />
                   </div>
                 </div>
               </div>
