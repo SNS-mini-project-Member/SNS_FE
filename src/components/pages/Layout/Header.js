@@ -4,9 +4,11 @@ import {useNavigate} from "react-router-dom";
 const Header = () => {
   const isMainPage = window.location.pathname;
   const nav = useNavigate();
+
   const link = (path) => {
     nav(path)
   }
+
 
   return (
     <div style={{position : 'fixed', top: 0, zIndex : '2'}} className={classes.headerWrap}>
