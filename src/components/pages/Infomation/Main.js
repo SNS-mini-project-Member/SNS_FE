@@ -7,9 +7,12 @@ import {useNavigate} from "react-router-dom";
 
 const Main = () => {
     const nav= useNavigate();
+
+    const isMainPage = window.location.pathname;
     const onClickBtn = () =>{
         nav('/update')
     }
+
   return (
     <>
       <Header />

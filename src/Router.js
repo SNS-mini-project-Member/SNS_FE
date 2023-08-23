@@ -4,6 +4,7 @@ import Signup from "./components/pages/Login/Signup";
 import Main from "./components/pages/Infomation/Main";
 import Update from "./components/pages/Login/Update";
 import SendTmpPw from "./components/pages/Login/SendTmpPw";
+import FriendsMenu from "./components/pages/Infomation/FriendsMenu";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path : 'sendTmpPw',
     element : <SendTmpPw />,
+  },
+  {
+    path : 'friendsMenu',
+    element : <FriendsMenu />,
   },
 ]);
 
