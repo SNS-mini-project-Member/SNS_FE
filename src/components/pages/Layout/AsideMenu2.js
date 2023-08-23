@@ -1,15 +1,20 @@
 import classes from "../../../styles/pages/layout/asideMenu.module.css";
+import {useNavigate} from "react-router-dom";
 const AsideMenu2 = () => {
 
   const isFriendsMenu = window.location.pathname.endsWith("/friendsMenu");
+  const nav = useNavigate();
 
+  const link = (path) => {
+    nav(path);
+  }
 
   return (
     <div style={{position : 'fixed', left : '0', top: '56px'}} className={classes.asideWrap2}>
       <h2 style={{fontSize : '20px', marginBottom: '10px'}}>친구</h2>
       <ul>
-        <li className={`${classes.itemWrap} ${isFriendsMenu ? classes.activeMenuItem : ""}`}
-        >
+        {/*className={`${classes.itemWrap} ${isFriendsMenu ? classes.activeMenuItem : ""}`}*/}
+        <li className={classes.itemWrap}>
           <div className={classes.imgWrap}>
             <svg viewBox="0 0 28 28" className="x1lliihq x1k90msu x2h7rmj x1qfuztq xcza8v6" fill="currentColor"
                  height="28" width="28">

@@ -1,8 +1,5 @@
 import Header from "../Layout/Header";
 import MainLayout from "../Layout/MainLayout";
-import AsideMenu from "../Layout/AsideMenu";
-import StoryBoard from "../Layout/StoryBoard";
-import ChatList from "../Layout/ChatList";
 import AsideMenu2 from "../Layout/AsideMenu2";
 import FriendsBoard from "../Layout/FriendsBoard";
 
@@ -14,7 +11,7 @@ const FriendsMenu = () => {
         <Header />
         <MainLayout>
           <AsideMenu2 />
-          {isMainPage == '/friendsMenu' && <FriendsBoard />}
+          <FriendsBoard />
         </MainLayout>
     </>
   )
