@@ -1,23 +1,38 @@
 import classes from "../../../styles/pages/layout/header.module.css";
+import {useNavigate} from "react-router-dom";
+
 const Header = () => {
+  const isMainPage = window.location.pathname;
+  const nav = useNavigate();
+
+  const link = (path) => {
+    nav(path)
+  }
+
+
   return (
-    <div className={classes.headerWrap}>
+    <div style={{position : 'fixed', top: 0, zIndex : '2'}} className={classes.headerWrap}>
       <div className={classes.logoArea}>
         <div className={classes.logoImg}>
-          <img className={classes.smallLogo} src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/smallLogo.png?alt=media&token=71085c18-0dc3-4fb9-a115-666e473f050b" />
+          <img onClick={() => {link('/main')}} loading="lazy" className={classes.smallLogo} src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/smallLogo.png?alt=media&token=71085c18-0dc3-4fb9-a115-666e473f050b" />
         </div>
       </div>
       <div className={classes.menuArea}>
         <ul className={classes.menuWrap}>
-          <li>
-            <svg viewBox="0 0 28 28" className="x1lliihq x1k90msu x2h7rmj x1qfuztq x5e5rjt" fill="currentColor"
-                 height="28" width="28">
+          <li onClick={() => {link('/main')}}>
+            <svg
+              viewBox="0 0 28 28"
+              className="x1lliihq x1k90msu x2h7rmj x1qfuztq x5e5rjt"
+              fill={isMainPage === "/main" ? "#216FDB" : "currentColor"} // 수정
+              height="28"
+              width="28"
+            >
               <path
                 d="M25.825 12.29C25.824 12.289 25.823 12.288 25.821 12.286L15.027 2.937C14.752 2.675 14.392 2.527 13.989 2.521 13.608 2.527 13.248 2.675 13.001 2.912L2.175 12.29C1.756 12.658 1.629 13.245 1.868 13.759 2.079 14.215 2.567 14.479 3.069 14.479L5 14.479 5 23.729C5 24.695 5.784 25.479 6.75 25.479L11 25.479C11.552 25.479 12 25.031 12 24.479L12 18.309C12 18.126 12.148 17.979 12.33 17.979L15.67 17.979C15.852 17.979 16 18.126 16 18.309L16 24.479C16 25.031 16.448 25.479 17 25.479L21.25 25.479C22.217 25.479 23 24.695 23 23.729L23 14.479 24.931 14.479C25.433 14.479 25.921 14.215 26.132 13.759 26.371 13.245 26.244 12.658 25.825 12.29"></path>
             </svg>
           </li>
-          <li>
-            <svg viewBox="0 0 28 28" className="x1lliihq x1k90msu x2h7rmj x1qfuztq xcza8v6" fill="currentColor"
+          <li onClick={() => {link('/friendsMenu')}}>
+            <svg fill={isMainPage === "/friendsMenu" ? "#216FDB" : "currentColor"} // 수정 viewBox="0 0 28 28" className="x1lliihq x1k90msu x2h7rmj x1qfuztq xcza8v6" fill="currentColor"
                  height="28" width="28">
               <path
                 d="M10.5 4.5c-2.272 0-2.75 1.768-2.75 3.25C7.75 9.542 8.983 11 10.5 11s2.75-1.458 2.75-3.25c0-1.482-.478-3.25-2.75-3.25zm0 8c-2.344 0-4.25-2.131-4.25-4.75C6.25 4.776 7.839 3 10.5 3s4.25 1.776 4.25 4.75c0 2.619-1.906 4.75-4.25 4.75zm9.5-6c-1.41 0-2.125.841-2.125 2.5 0 1.378.953 2.5 2.125 2.5 1.172 0 2.125-1.122 2.125-2.5 0-1.659-.715-2.5-2.125-2.5zm0 6.5c-1.999 0-3.625-1.794-3.625-4 0-2.467 1.389-4 3.625-4 2.236 0 3.625 1.533 3.625 4 0 2.206-1.626 4-3.625 4zm4.622 8a.887.887 0 00.878-.894c0-2.54-2.043-4.606-4.555-4.606h-1.86c-.643 0-1.265.148-1.844.413a6.226 6.226 0 011.76 4.336V21h5.621zm-7.122.562v-1.313a4.755 4.755 0 00-4.749-4.749H8.25A4.755 4.755 0 003.5 20.249v1.313c0 .518.421.938.937.938h12.125c.517 0 .938-.42.938-.938zM20.945 14C24.285 14 27 16.739 27 20.106a2.388 2.388 0 01-2.378 2.394h-5.81a2.44 2.44 0 01-2.25 1.5H4.437A2.44 2.44 0 012 21.562v-1.313A6.256 6.256 0 018.25 14h4.501a6.2 6.2 0 013.218.902A5.932 5.932 0 0119.084 14h1.861z"></path>
@@ -61,8 +76,8 @@ const Header = () => {
               d="M7.847 23.488C9.207 23.488 11.443 23.363 14.467 22.806 13.944 24.228 12.581 25.247 10.98 25.247 9.649 25.247 8.483 24.542 7.825 23.488L7.847 23.488ZM24.923 15.73C25.17 17.002 24.278 18.127 22.27 19.076 21.17 19.595 18.724 20.583 14.684 21.369 11.568 21.974 9.285 22.113 7.848 22.113 7.421 22.113 7.068 22.101 6.79 22.085 4.574 21.958 3.324 21.248 3.077 19.976 2.702 18.049 3.295 17.305 4.278 16.073L4.537 15.748C5.2 14.907 5.459 14.081 5.035 11.902 4.086 7.022 6.284 3.687 11.064 2.753 15.846 1.83 19.134 4.096 20.083 8.977 20.506 11.156 21.056 11.824 21.986 12.355L21.986 12.356 22.348 12.561C23.72 13.335 24.548 13.802 24.923 15.73Z"></path>
           </svg>
         </div>
-        <div className={classes.myMenuItem}>
-          <img className={classes.myImg} src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/mypage.png?alt=media&token=a5426fe2-282d-407f-a13d-6320fcf18b00" />
+        <div onClick={() => {link('/update')}} className={classes.myMenuItem}>
+          <img loading="lazy" className={classes.myImg} src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/mypage.png?alt=media&token=a5426fe2-282d-407f-a13d-6320fcf18b00" />
         </div>
       </div>
     </div>

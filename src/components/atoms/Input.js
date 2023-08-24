@@ -11,7 +11,7 @@ const Input = (props) => {
 
   return (
     <div className={classes.inputWrap}>
-      <input ref={inputRef} className={classes.inputStyle} placeholder={props.placeholder} type={props.type} />
+      <input name={props.name} onChange={props.onChange} value={props.value} ref={inputRef} className={classes.inputStyle} placeholder={props.placeholder} type={props.type} />
     </div>
   );
 }
