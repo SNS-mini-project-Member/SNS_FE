@@ -15,16 +15,20 @@ const StoryBoard = () => {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [showReplyInput, setShowReplyInput] = useState(false); // State for reply input visibility
   const isLogin = useSelector(state => state.loginCheck.loginInfo);
+  const [boardData, setBoardData] = useState([]);
 
   useEffect(() => {
-
     axios.get('http://localhost:8080/api/v1/board')
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
+          setBoardData(response.data);
         })
         .catch((err) => {
           console.log(err);
         });
+  }, [])
+
+  useEffect(() => {
     const handleScroll = () => {
       const videoPlayStatusCopy = [...videoPlayStatus];
       videoRefs.current.forEach((videoRef, index) => {
@@ -107,140 +111,143 @@ const StoryBoard = () => {
           <p>사진을 공유하거나 글을 남겨보세요.</p>
         </div>
       </div>
-      <div className={classes.createBoard2}>
-        <div className={classes.titleWrap}>
-          <h2 className={classes.suggestion}>추천 게시물</h2>
-        </div>
-        <div className={classes.flexStyle}>
-          <div>
-            <img loading="lazy" className={classes.img} src={jj} />
-          </div>
-          <div>
-            <h2>박준제</h2>
-            <p>8월 22일 오후 2:43</p>
-          </div>
-        </div>
-        <div className={classes.description}>
-          <p>제 스쿼드 이 정도면 나름 쓸만하지 않나요 ?</p>
-        </div>
-        <div className={classes.videoArea}>
-          <img loading="lazy" src={ff} />
-        </div>
-        <div className={classes.likeArea}>
-          <div className={classes.likeAreaLeft}>
-            <div className={classes.likeFlex}>
-              <span>1,245</span>
-              <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/like.svg?alt=media&token=57793a04-e2df-4f9c-abe5-2445f83e4a57" />
+      {boardData.map((item, idx) => (
+          <div key={idx} className={classes.createBoard2}>
+            <div className={classes.titleWrap}>
+              <h2 className={classes.suggestion}>추천 게시물</h2>
+            </div>
+            <div className={classes.flexStyle}>
+              <div>
+                <img loading="lazy" className={classes.img} src={jj} />
+              </div>
+              <div>
+                <h2>{item.user.userName}</h2>
+                <p>{item.user.createdAt}</p>
+              </div>
+            </div>
+            <div className={classes.description}>
+              <p>{item.contents}</p>
+            </div>
+            <div className={classes.videoArea}>
+              <img loading="lazy" src={ff} />
+            </div>
+            <div className={classes.likeArea}>
+              <div className={classes.likeAreaLeft}>
+                <div className={classes.likeFlex}>
+                  <span>1,245</span>
+                  <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/like.svg?alt=media&token=57793a04-e2df-4f9c-abe5-2445f83e4a57" />
+                </div>
+              </div>
+              <div className={classes.likeAreaRight}>
+                <div className={classes.likeFlex}>
+                  <span>1,245</span>
+                  <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/bookmark.png?alt=media&token=bd0b81ce-e724-47a7-9556-75a48130dc3d" />
+                </div>
+                <div className={classes.comentFlex} onClick={openCommentModal}>
+                  <span>2,345</span>
+                  <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />
+                </div>
+              </div>
             </div>
           </div>
-          <div className={classes.likeAreaRight}>
-            <div className={classes.likeFlex}>
-              <span>1,245</span>
-              <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/bookmark.png?alt=media&token=bd0b81ce-e724-47a7-9556-75a48130dc3d" />
-            </div>
-            <div className={classes.comentFlex} onClick={openCommentModal}>
-              <span>2,345</span>
-              <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className={classes.createBoard2}>
-        <div className={classes.titleWrap}>
-          <h2 className={classes.suggestion}>추천 게시물</h2>
-        </div>
-        <div className={classes.flexStyle}>
-          <div>
-            <img loading="lazy" className={classes.img} src='https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/testImg.png?alt=media&token=10879be7-cee5-4e1a-899a-604120643f9b' />
-          </div>
-          <div>
-            <h2>대한민국 경찰청</h2>
-            <p>8월 14일 오후 2:43</p>
-          </div>
-        </div>
-        <div className={classes.description}>
-          <p>“알고보니 사기꾼이었다…” 8억시계 찼던 추성훈 통장잔고 확인해보니 20만원, 충격적인 고백에 모두가 경악한 진짜 이유..</p>
-        </div>
-        <div className={classes.videoArea}>
-          {/*<video*/}
-          {/*  ref={(ref) => videoRefs.current.push(ref)}*/}
-          {/*  style={{ width: "100%", height: "100%" }}*/}
-          {/*  controls*/}
-          {/*  autoPlay*/}
-          {/*>*/}
-          {/*  <source*/}
-          {/*    src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/news.mp4?alt=media&token=6ec9f1ff-d518-4ac9-aad0-cf2e7ea077dc"*/}
-          {/*    type="video/mp4"*/}
-          {/*  />*/}
-          {/*</video>*/}
-        </div>
-        <div className={classes.likeArea}>
-          <div className={classes.likeAreaLeft}>
-            <div className={classes.likeFlex}>
-              <span>1,245</span>
-              <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/like.svg?alt=media&token=57793a04-e2df-4f9c-abe5-2445f83e4a57" />
-            </div>
-          </div>
-          <div className={classes.likeAreaRight}>
-            <div className={classes.likeFlex}>
-              <span>1,245</span>
-              <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/bookmark.png?alt=media&token=bd0b81ce-e724-47a7-9556-75a48130dc3d" />
-            </div>
-            <div className={classes.comentFlex}>
-              <span>2,345</span>
-              <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className={classes.createBoard2}>
-        <div className={classes.titleWrap}>
-          <h2 className={classes.suggestion}>추천 게시물</h2>
-        </div>
-        <div className={classes.flexStyle}>
-          <div>
-            <img loading="lazy" className={classes.img} src='https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/testImg.png?alt=media&token=10879be7-cee5-4e1a-899a-604120643f9b' />
-          </div>
-          <div>
-            <h2>대한민국 경찰청</h2>
-            <p>8월 14일 오후 2:43</p>
-          </div>
-        </div>
-        <div className={classes.description}>
-          <p>“알고보니 사기꾼이었다…” 8억시계 찼던 추성훈 통장잔고 확인해보니 20만원, 충격적인 고백에 모두가 경악한 진짜 이유..</p>
-        </div>
-        <div className={classes.videoArea}>
-          {/*<video*/}
-          {/*  ref={(ref) => videoRefs.current.push(ref)}*/}
-          {/*  style={{ width: "100%", height: "100%" }}*/}
-          {/*  controls*/}
-          {/*  autoPlay*/}
-          {/*>*/}
-          {/*  <source*/}
-          {/*    src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/news.mp4?alt=media&token=6ec9f1ff-d518-4ac9-aad0-cf2e7ea077dc"*/}
-          {/*    type="video/mp4"*/}
-          {/*  />*/}
-          {/*</video>*/}
-        </div>
-        <div className={classes.likeArea}>
-          <div className={classes.likeAreaLeft}>
-            <div className={classes.likeFlex}>
-              <span>1,245</span>
-              <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/like.svg?alt=media&token=57793a04-e2df-4f9c-abe5-2445f83e4a57" />
-            </div>
-          </div>
-          <div className={classes.likeAreaRight}>
-            <div className={classes.likeFlex}>
-              <span>1,245</span>
-              <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/bookmark.png?alt=media&token=bd0b81ce-e724-47a7-9556-75a48130dc3d" />
-            </div>
-            <div className={classes.comentFlex}>
-              <span>2,345</span>
-              <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />
-            </div>
-          </div>
-        </div>
-      </div>
+      ))}
+
+      {/*<div className={classes.createBoard2}>*/}
+      {/*  <div className={classes.titleWrap}>*/}
+      {/*    <h2 className={classes.suggestion}>추천 게시물</h2>*/}
+      {/*  </div>*/}
+      {/*  <div className={classes.flexStyle}>*/}
+      {/*    <div>*/}
+      {/*      <img loading="lazy" className={classes.img} src='https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/testImg.png?alt=media&token=10879be7-cee5-4e1a-899a-604120643f9b' />*/}
+      {/*    </div>*/}
+      {/*    <div>*/}
+      {/*      <h2>대한민국 경찰청</h2>*/}
+      {/*      <p>8월 14일 오후 2:43</p>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div className={classes.description}>*/}
+      {/*    <p>“알고보니 사기꾼이었다…” 8억시계 찼던 추성훈 통장잔고 확인해보니 20만원, 충격적인 고백에 모두가 경악한 진짜 이유..</p>*/}
+      {/*  </div>*/}
+      {/*  <div className={classes.videoArea}>*/}
+      {/*    /!*<video*!/*/}
+      {/*    /!*  ref={(ref) => videoRefs.current.push(ref)}*!/*/}
+      {/*    /!*  style={{ width: "100%", height: "100%" }}*!/*/}
+      {/*    /!*  controls*!/*/}
+      {/*    /!*  autoPlay*!/*/}
+      {/*    /!*>*!/*/}
+      {/*    /!*  <source*!/*/}
+      {/*    /!*    src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/news.mp4?alt=media&token=6ec9f1ff-d518-4ac9-aad0-cf2e7ea077dc"*!/*/}
+      {/*    /!*    type="video/mp4"*!/*/}
+      {/*    /!*  />*!/*/}
+      {/*    /!*</video>*!/*/}
+      {/*  </div>*/}
+      {/*  <div className={classes.likeArea}>*/}
+      {/*    <div className={classes.likeAreaLeft}>*/}
+      {/*      <div className={classes.likeFlex}>*/}
+      {/*        <span>1,245</span>*/}
+      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/like.svg?alt=media&token=57793a04-e2df-4f9c-abe5-2445f83e4a57" />*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className={classes.likeAreaRight}>*/}
+      {/*      <div className={classes.likeFlex}>*/}
+      {/*        <span>1,245</span>*/}
+      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/bookmark.png?alt=media&token=bd0b81ce-e724-47a7-9556-75a48130dc3d" />*/}
+      {/*      </div>*/}
+      {/*      <div className={classes.comentFlex}>*/}
+      {/*        <span>2,345</span>*/}
+      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+      {/*<div className={classes.createBoard2}>*/}
+      {/*  <div className={classes.titleWrap}>*/}
+      {/*    <h2 className={classes.suggestion}>추천 게시물</h2>*/}
+      {/*  </div>*/}
+      {/*  <div className={classes.flexStyle}>*/}
+      {/*    <div>*/}
+      {/*      <img loading="lazy" className={classes.img} src='https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/testImg.png?alt=media&token=10879be7-cee5-4e1a-899a-604120643f9b' />*/}
+      {/*    </div>*/}
+      {/*    <div>*/}
+      {/*      <h2>대한민국 경찰청</h2>*/}
+      {/*      <p>8월 14일 오후 2:43</p>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div className={classes.description}>*/}
+      {/*    <p>“알고보니 사기꾼이었다…” 8억시계 찼던 추성훈 통장잔고 확인해보니 20만원, 충격적인 고백에 모두가 경악한 진짜 이유..</p>*/}
+      {/*  </div>*/}
+      {/*  <div className={classes.videoArea}>*/}
+      {/*    /!*<video*!/*/}
+      {/*    /!*  ref={(ref) => videoRefs.current.push(ref)}*!/*/}
+      {/*    /!*  style={{ width: "100%", height: "100%" }}*!/*/}
+      {/*    /!*  controls*!/*/}
+      {/*    /!*  autoPlay*!/*/}
+      {/*    /!*>*!/*/}
+      {/*    /!*  <source*!/*/}
+      {/*    /!*    src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/news.mp4?alt=media&token=6ec9f1ff-d518-4ac9-aad0-cf2e7ea077dc"*!/*/}
+      {/*    /!*    type="video/mp4"*!/*/}
+      {/*    /!*  />*!/*/}
+      {/*    /!*</video>*!/*/}
+      {/*  </div>*/}
+      {/*  <div className={classes.likeArea}>*/}
+      {/*    <div className={classes.likeAreaLeft}>*/}
+      {/*      <div className={classes.likeFlex}>*/}
+      {/*        <span>1,245</span>*/}
+      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/like.svg?alt=media&token=57793a04-e2df-4f9c-abe5-2445f83e4a57" />*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className={classes.likeAreaRight}>*/}
+      {/*      <div className={classes.likeFlex}>*/}
+      {/*        <span>1,245</span>*/}
+      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/bookmark.png?alt=media&token=bd0b81ce-e724-47a7-9556-75a48130dc3d" />*/}
+      {/*      </div>*/}
+      {/*      <div className={classes.comentFlex}>*/}
+      {/*        <span>2,345</span>*/}
+      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
 
       {/* 모달 컨텐츠 */}
       {isModalOpen && (
