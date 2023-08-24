@@ -1,15 +1,5 @@
 import {apiClient} from "./ApiClient";
 
-<<<<<<< HEAD
-
-// export const emailValidService = (userId) => apiClient.post(`/api/v1/mail/${userId}`, {
-//   email: userId
-// })
-
-export const executeJwtAuthenticationTokenService = (username, password) => apiClient.post('/api/v1/authenticate', {username, password})
-
-
-=======
 export const executeJwtAuthenticationTokenService = (username, password) => apiClient.post('/api/v1/authenticate', {username, password})
 
 export const userLogin = (email, password) => apiClient.post('/api/v1/users/login', {email, password})
