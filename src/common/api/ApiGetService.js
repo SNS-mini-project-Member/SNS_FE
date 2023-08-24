@@ -13,6 +13,16 @@ export const apiGetresult = () => apiClient.get('/api/v1/friend/friendShip')
 
 export const apiDeleteFriend = (friendShipId) => apiClient.delete(`api/v1/friend/deleteFriend/${friendShipId}`)
 
-export const apiAddFriend = (userId1, userId2) => apiClient.post('api/v1/friend/addFriends', { userId1, userId2 });
+export const apiAddFriend = (friendShipRequest, friendRecommendRequest, friendReqRequest) => apiClient.post('api/v1/friend/addFriends', {
+    friendShipRequest : {
+        friendShipId : friendShipRequest.loggedInUserId,
+        userId : friendShipRequest.friendUserId
+    },
+    friendRecommendRequest,
+    friendReqRequest : {
+        friendReqId : friendReqRequest.friendUserId,
+        userId : friendReqRequest.loggedInUserId
+    }
+});
 
-export const apiSearchFriend = (friendName) => apiClient.get(`api/v1/friend/friendFindByName/${friendName}`)
+export const apiSearchFriend = (friendName) => apiClient.get(`api/v1/friend/friendByName/${friendName}`)

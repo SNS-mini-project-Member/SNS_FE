@@ -45,6 +45,7 @@ const FriendTable = () => {
     };
 
     const confirmAddFriend = () => {
+        debugger
         // 친구 검색 메소드 호출
         apiSearchFriend(newFriendName) // 친구 이름으로 검색
             .then((searchResult) => {
@@ -52,12 +53,24 @@ const FriendTable = () => {
                     console.log("친구를 찾을 수 없습니다.");
                     return;
                 }
+                debugger
 
-                const friendUserId = searchResult[0].userId; // 첫 번째 검색 결과의 userId 사용
-                const loggedInUserId = isLogin.userSeq; // 현재 로그인한 유저의 userId (변경 필요)
+                const friendUserId= searchResult.data.userId;
+                const loggedInUserId = isLogin.userSeq; // 현재 로그인한 유저의 userId
+
+                const friendShipRequest = {
+                    loggedInUserId,
+                    friendUserId
+                }
+
+                const friendReqRequest = {
+                    friendUserId,
+                    loggedInUserId
+                }
 
                 // 친구 추가
-                apiAddFriend(loggedInUserId, friendUserId)
+                apiAddFriend(friendShipRequest, null,  friendReqRequest)
+                //apiAddFriend(friendShipRequest(loggedInUserId,friendUserId), null, friendReqRequest(friendUserId,loggedInUserId))
                     .then((res) => {
                         console.log("친구 추가 성공:", res);
                         setShowAddFriendModal(false); // 모달 닫기
