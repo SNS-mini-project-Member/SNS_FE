@@ -17,18 +17,15 @@ const Login = () => {
 
   const loginHandler = () => {
 
-
     userLogin(email, password)
     .then((res) => {
-      alert("로그인 성공")
-      dispatch(loginCheckAction.loginInfoSet(res.data));
       nav('/main');
+      dispatch(loginCheckAction.loginInfoSet(res.data));
+      alert("로그인 성공")
     }).catch((err) => {
       console.log(err)
       alert("로그인 실패")
     })
-
-
   }
 
   const signUpHandler = () => {
