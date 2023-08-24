@@ -32,6 +32,7 @@ const MyInfo = () => {
     const hours = createAt.getHours().toString().padStart(2, "0");
     const minutes = createAt.getMinutes().toString().padStart(2, "0");
     const seconds = createAt.getSeconds().toString().padStart(2, "0");
+
     return `${year}년-${month}월-${day}일 ${hours}시 ${minutes}분 ${seconds}초`;
   };
   const onClickCheck = () => {

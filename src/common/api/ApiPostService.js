@@ -11,3 +11,5 @@ export const emailCheck = (email) => apiClient.post(`/api/v1/mail`, {email})
 export const sendTmpPw = (email) => apiClient.post(`/api/v1/mail/pwChange`, {email})
 
 export const updatePw = (email, password) => apiClient.post('/api/v1/users/update', {email, password})
+
+export const insertBoard = (userSeq, contents, media) => apiClient.post('/api/v1/boards', {userSeq, contents, media})

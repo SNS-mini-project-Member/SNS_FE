@@ -9,8 +9,13 @@ const initialIsLoginState = {
       phone : null,
       followers_count : 0,
       followings_count : 0,
+
       createAt : null,
-      token: null
+
+      createdAt : null,
+
+      token: null,
+      userSeq:null
   }
 }
 
