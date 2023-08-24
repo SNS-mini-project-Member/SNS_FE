@@ -8,6 +8,10 @@ const AsideMenu = () => {
     nav('/friend');
   };
 
+  const handleFollowClick = () => {
+    nav('/follow');
+  };
+
   return (
     <div style={{position : 'fixed', left : '0'}} className={classes.asideWrap}>
       <ul>
@@ -17,11 +21,11 @@ const AsideMenu = () => {
           </div>
           <p>이동명</p>
         </li>
-        <li className={classes.itemWrap}>
+        <li className={classes.itemWrap} onClick={handleFollowClick}>
           <div className={classes.imgWrap}>
             <img loading="lazy" className={classes.img} src='https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/mypage.png?alt=media&token=a5426fe2-282d-407f-a13d-6320fcf18b00' />
           </div>
-          <p>친구찾기</p>
+          <p>팔로우 조회</p>
         </li>
         <li className={classes.itemWrap} onClick={handleFriendClick}>
           <div className={classes.imgWrap}>
@@ -30,7 +34,7 @@ const AsideMenu = () => {
                 src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/mypage.png?alt=media&token=a5426fe2-282d-407f-a13d-6320fcf18b00"
             />
           </div>
-          <p>친구조회</p>
+          <p>친구 조회</p>
         </li>
       </ul>
     </div>

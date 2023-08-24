@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/blocks/friendDeletePopup.css";
+import "../../styles/blocks/deletePopup.css";
 
 const FriendDeletePopup = ({ onClose }) => {
     return (

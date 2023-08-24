@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from "../Layout/MainLayout";
 import Header from "../Layout/Header";
-import {apiGetresult, apiDeleteFriend, apiAddFriend, apiSearchFriend} from "../../../common/api/ApiGetService"; // apiAddFriend 추가
+import {
+    apiGetresult,
+    apiDeleteFollow,
+    apiAddFollow,
+    apiSearchFollow,
+    apiGetFollowresult
+} from "../../../common/api/ApiGetService"; // apiAddFollow 추가
 import "../../../styles/blocks/table.css";
 import "../../../styles/blocks/modal.css"
 import {useSelector} from "react-redux";
 
-const FriendTable = () => {
-    const [friendData, setFriendData] = useState([]);
+const FollowTable = () => {
+    const [follow, setFollowData] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
-    const [selectedFriendShipId, setSelectedFriendShipId] = useState(null);
-    const [showAddFriendModal, setShowAddFriendModal] = useState(false); // 친구 추가 모달 표시 여부 상태 추가
-    const [newFriendName, setNewFriendName] = useState(""); // 입력된 새 친구 이름 상태 추가
+    const [selectedFollowId, setSelectedFollowId] = useState(null);
+    const [showAddFollowModal, setShowAddFollowModal] = useState(false); // 팔로우 추가 모달 표시 여부 상태 추가
+    const [newFollowName, setNewFollowName] = useState(""); // 입력된 새 팔로우 이름 상태 추가
     const isLogin = useSelector(state => state.loginCheck.loginInfo);
 
     useEffect(() => {
-        apiGetresult()
+        apiGetFollowresult()
             .then((res) => {
-                setFriendData(res.data.content);
+                setFollowData(res.data.content);
                 console.log(res.data.content);
             })
             .catch((err) => {
@@ -26,78 +32,78 @@ const FriendTable = () => {
     }, []);
 
 
-    const handleDeleteFriend = (friendShipId) => {
-        setSelectedFriendShipId(friendShipId);
-        apiDeleteFriend(friendShipId)
+    const handDeleteFollow = (followId) => {
+        setSelectedFollowId(followId);
+        apiDeleteFollow(followId)
             .then((res) => {
                 setShowPopup(true);
-                console.log("친구 삭제 성공:", res);
+                console.log("팔로우 취소 성공:", res);
             })
             .catch((err) => {
                 setShowPopup(false);
-                setSelectedFriendShipId(null);
-                console.log("친구 삭제 실패:", err);
+                setSelectedFollowId(null);
+                console.log("팔로우 성공:", err);
             });
     };
 
-    const openAddFriendModal = () => {
-        setShowAddFriendModal(true);
+    const openAddFollowModal = () => {
+        setShowAddFollowModal(true);
     };
 
-    const confirmAddFriend = () => {
+    const confirmAddFollow = () => {
         debugger
-        // 친구 검색 메소드 호출
-        apiSearchFriend(newFriendName) // 친구 이름으로 검색
+        // 팔로우 검색 메소드 호출
+        apiSearchFollow(newFollowName) //
             .then((searchResult) => {
                 if (searchResult.length === 0) {
-                    console.log("친구를 찾을 수 없습니다.");
+                    console.log("유저를 찾을 수 없습니다.");
                     return;
                 }
                 debugger
 
-                const friendUserId= searchResult.data.userId;
+                const followUserId= searchResult.data.userId;
                 const loggedInUserId = isLogin.userSeq; // 현재 로그인한 유저의 userId
 
-                const friendShipRequest = {
+                const followerRequest = {
                     loggedInUserId,
-                    friendUserId
+                    followUserId
                 }
 
-                const friendReqRequest = {
-                    friendUserId,
+                const followingRequest = {
+                    followUserId,
                     loggedInUserId
                 }
 
                 // 친구 추가
-                apiAddFriend(friendShipRequest, null,  friendReqRequest)
-                //apiAddFriend(friendShipRequest(loggedInUserId,friendUserId), null, friendReqRequest(friendUserId,loggedInUserId))
+                apiAddFollow(followingRequest, followerRequest)
+                    //apiAddFollow(followShipRequest(loggedInUserId,followUserId), null, followReqRequest(followUserId,loggedInUserId))
                     .then((res) => {
-                        console.log("친구 추가 성공:", res);
-                        setShowAddFriendModal(false); // 모달 닫기
-                        setNewFriendName(""); // 입력된 친구 이름 초기화
+                        console.log("팔로우 성공:", res);
+                        setShowAddFollowModal(false); // 모달 닫기
+                        setNewFollowName(""); // 입력된 팔로우 이름 초기화
 
                         // 친구 추가 성공 후 친구 목록 갱신
                         apiGetresult()
                             .then((res) => {
-                                setFriendData(res.data.content);
+                                setFollowData(res.data.content);
                             })
                             .catch((err) => {
                                 console.log(err);
                             });
                     })
                     .catch((err) => {
-                        console.log("친구 추가 실패:", err);
+                        console.log("팔로우 추가 실패:", err);
                     });
             })
             .catch((err) => {
-                console.log("친구 검색 실패:", err);
+                console.log("팔로우 검색 실패:", err);
             });
     };
 
 
-    const closeAddFriendModal = () => {
-        setShowAddFriendModal(false);
-        setNewFriendName("");
+    const closeAddFollowModal = () => {
+        setShowAddFollowModal(false);
+        setNewFollowName("");
     };
 
     return (
@@ -105,7 +111,7 @@ const FriendTable = () => {
             <Header />
             <MainLayout>
                 <div className="table-container">
-                    <h1 className="table-title">친구 목록</h1>
+                    <h1 className="table-title">팔로우 목록</h1>
                     <table>
                         <thead>
                         <tr>
@@ -118,7 +124,7 @@ const FriendTable = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {friendData.map((item) => (
+                        {follow.map((item) => (
                             <tr key={item.userSeq}>
                                 <td>{item.userName}</td>
                                 <td>{item.userEmail}</td>
@@ -126,37 +132,37 @@ const FriendTable = () => {
                                 <td>{item.userPhone}</td>
                                 <td>{item.followingCount}</td>
                                 <td>
-                                    <button onClick={() => handleDeleteFriend(item.userId)}
-                                            disabled={selectedFriendShipId === item.userId}>
-                                        {selectedFriendShipId === item.userId
+                                    <button onClick={() => handDeleteFollow(item.userId)}
+                                            disabled={selectedFollowId === item.userId}>
+                                        {selectedFollowId === item.userId
                                             ? "삭제 중"
-                                            : "친구 취소"}</button>
+                                            : "팔로우 취소"}</button>
                                 </td>
                             </tr>
                         ))}
                         <tr>
                             <td colSpan="6">
-                                <button onClick={openAddFriendModal}>친구 추가</button>
+                                <button onClick={openAddFollowModal}>팔로우 추가</button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </MainLayout>
-            {/* 친구 추가 모달 */}
-            {showAddFriendModal && (
+            {/* 팔로우 추가 모달 */}
+            {showAddFollowModal && (
                 <div className="modal-overlay">
                     <div className="modal">
                         <div className="modal-content">
-                            <h2>새 친구 추가</h2>
+                            <h2>새 팔로우 추가</h2>
                             <input
                                 type="text"
-                                placeholder="친구 이름 입력"
-                                value={newFriendName}
-                                onChange={(e) => setNewFriendName(e.target.value)}
+                                placeholder="팔로우 입력"
+                                value={newFollowName}
+                                onChange={(e) => setNewFollowName(e.target.value)}
                             />
-                            <button onClick={confirmAddFriend}>확인</button>
-                            <button onClick={closeAddFriendModal}>취소</button>
+                            <button onClick={confirmAddFollow}>확인</button>
+                            <button onClick={closeAddFollowModal}>취소</button>
                         </div>
                     </div>
                 </div>
@@ -166,5 +172,4 @@ const FriendTable = () => {
     );
 };
 
-export default FriendTable;
-
+export default FollowTable;

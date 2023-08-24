@@ -26,3 +26,21 @@ export const apiAddFriend = (friendShipRequest, friendRecommendRequest, friendRe
 });
 
 export const apiSearchFriend = (friendName) => apiClient.get(`api/v1/friend/friendByName/${friendName}`)
+
+export const apiGetFollowresult = () => apiClient.get(`/api/v1/follow`)
+
+export const apiDeleteFollow = (friendShipId) => apiClient.delete(`api/v1/friend/deleteFriend/${friendShipId}`)
+
+export const apiAddFollow = (followingRequest, followerRequest) => apiClient.post('api/v1/follow/addFollowers', {
+    followingRequest : {
+        userId : followingRequest.loggedInUserId,
+        followingId : followingRequest.friendUserId
+    },
+    followerRequest : {
+        userId : followerRequest.friendUserId,
+        followerUserId : followingRequest.loggedInUserId
+    }
+});
+
+
+export const apiSearchFollow = (followName) => apiClient.get(`api/v1/follow/`)
