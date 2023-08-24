@@ -3,6 +3,8 @@ import {useEffect, useRef, useState} from "react";
 import ff from "../../../asset/img/ff.webp";
 import jj from "../../../asset/img/jj3.webp";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {useSelector} from "react-redux";
 const StoryBoard = () => {
   const [videoPlayStatus, setVideoPlayStatus] = useState([]);
   const videoRefs = useRef([]);
@@ -12,13 +14,19 @@ const StoryBoard = () => {
   const [attachment, setAttachment] = useState(null); // 첨부 파일 상태
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [showReplyInput, setShowReplyInput] = useState(false); // State for reply input visibility
-
-
+  const isLogin = useSelector(state => state.loginCheck.loginInfo);
 
   useEffect(() => {
+
+    axios.get('http://localhost:8080/api/v1/board')
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     const handleScroll = () => {
       const videoPlayStatusCopy = [...videoPlayStatus];
-
       videoRefs.current.forEach((videoRef, index) => {
         if (videoRef == null || videoRef.getBoundingClientRect() == null) {
           return ;
