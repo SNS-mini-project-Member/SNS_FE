@@ -9,13 +9,9 @@ const initialIsLoginState = {
       phone : null,
       followers_count : 0,
       followings_count : 0,
-
-      createAt : null,
-
-      createdAt : null,
-
       token: null,
-      userSeq:null
+      userSeq:null,
+      created_at : null,
   }
 }
 
@@ -26,6 +22,10 @@ const loginCheckSlise = createSlice({
 
     loginInfoSet(state, action) {
       state.loginInfo = action.payload;
+    },
+
+    newToken(state, action) {
+      state.loginInfo.token = action.payload;
     },
 
   }

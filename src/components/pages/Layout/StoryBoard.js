@@ -3,10 +3,12 @@ import {useEffect, useRef, useState} from "react";
 import ff from "../../../asset/img/123.jpg";
 import jj from "../../../asset/img/jj3.webp";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 import {useSelector} from "react-redux";
 import {bookBtn, insertBoard, insertComment, likeBtn, reCommentBtn} from "../../../common/api/ApiPostService";
 import {commentBtn} from "../../../common/api/ApiGetService";
+import {boardIdGet} from "../../../common/api/ApiGetService";
+import axios from "axios";
+
 const StoryBoard = () => {
   const [videoPlayStatus, setVideoPlayStatus] = useState([]);
   const videoRefs = useRef([]);
@@ -25,6 +27,7 @@ const StoryBoard = () => {
   const [boardSeq, setBoardSeq] = useState('');
   const [board, setBoard] = useState({});
   const [img ,setImg] = useState('');
+
 
   // 게시물 화면 보여지게 하는 것
   useEffect(() => {
@@ -139,6 +142,8 @@ const StoryBoard = () => {
     setImg(e.target.value);
 
   };
+
+
   const handleSubmit = () => {
     // 게시글 내용과 첨부 파일 제출 처리
     insertBoard(isLogin.userSeq,content, img).then((res) => {

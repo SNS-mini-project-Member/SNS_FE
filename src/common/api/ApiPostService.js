@@ -2,7 +2,7 @@ import {apiClient} from "./ApiClient";
 
 export const executeJwtAuthenticationTokenService = (username, password) => apiClient.post('/api/v1/authenticate', {username, password})
 
-export const userLogin = (email, password) => apiClient.post('/api/v1/users/login', {email, password})
+export const userLogin = (email, password) => apiClient.post('/api/v1/users/login', {email, password});
 
 export const userSignup = (email, password, name, age, phone) => apiClient.post('/api/v1/users/signup', {email, password, name, age, phone})
 
@@ -21,3 +21,6 @@ export const bookBtn = (userSeq, bookSeq) => apiClient.post('/api/v1/book', {use
 export const reCommentBtn = (userSeq, reCommentSeq) => apiClient.post('/api/v1/recomment', {userSeq, reCommentSeq})
 
 export const insertComment = (userSeq, boardSeq, commentData) => apiClient.post('/api/v1/comment', {userSeq, boardSeq, commentData})
+
+export const validToken = (token) => apiClient.post('/api/v1/users/validToken', {token})
+
