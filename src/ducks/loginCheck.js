@@ -10,7 +10,6 @@ const initialIsLoginState = {
       followers_count : 0,
       followings_count : 0,
       created_at : null,
-      token: null
   }
 }
 
@@ -21,6 +20,10 @@ const loginCheckSlise = createSlice({
 
     loginInfoSet(state, action) {
       state.loginInfo = action.payload;
+    },
+
+    newToken(state, action) {
+      state.loginInfo.token = action.payload;
     },
 
   }

@@ -1,13 +1,18 @@
 import classes from "../../../styles/pages/layout/header.module.css";
 import {useNavigate} from "react-router-dom";
+import {validToken} from "../../../common/api/ApiPostService";
+import {useSelector} from "react-redux";
+import axios from "axios";
 
 const Header = () => {
   const isMainPage = window.location.pathname;
   const nav = useNavigate();
 
+
   const link = (path) => {
     nav(path)
   }
+
 
 
   return (
@@ -15,7 +20,7 @@ const Header = () => {
       <div className={classes.logoArea}>
         <div className={classes.logoImg}>
           <img onClick={() => {link('/main')}} loading="lazy" className={classes.smallLogo} src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/smallLogo.png?alt=media&token=71085c18-0dc3-4fb9-a115-666e473f050b" />
-        </div>
+         </div>
       </div>
       <div className={classes.menuArea}>
         <ul className={classes.menuWrap}>

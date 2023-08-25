@@ -7,6 +7,7 @@ import {Provider} from "react-redux";
 import store from './ducks';
 import {PersistGate} from "redux-persist/integration/react";
 import {persistStore} from "redux-persist";
+import firebase from "./components/config/Firebase";
 
 export let persistor = persistStore(store);
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -3,6 +3,8 @@ import {useEffect, useRef, useState} from "react";
 import ff from "../../../asset/img/ff.webp";
 import jj from "../../../asset/img/jj3.webp";
 import {useNavigate} from "react-router-dom";
+import {boardIdGet} from "../../../common/api/ApiGetService";
+
 const StoryBoard = () => {
   const [videoPlayStatus, setVideoPlayStatus] = useState([]);
   const videoRefs = useRef([]);
@@ -12,6 +14,14 @@ const StoryBoard = () => {
   const [attachment, setAttachment] = useState(null); // 첨부 파일 상태
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [showReplyInput, setShowReplyInput] = useState(false); // State for reply input visibility
+
+  useEffect(() => {
+    boardIdGet().then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err)
+    })
+  }, [])
 
 
 
@@ -74,6 +84,8 @@ const StoryBoard = () => {
     const file = e.target.files[0];
     setAttachment(file);
   };
+
+
   const handleSubmit = () => {
     // 게시글 내용과 첨부 파일 제출 처리
     console.log("게시글 내용:", content);
