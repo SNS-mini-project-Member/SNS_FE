@@ -48,3 +48,50 @@
 
 * 디자인 일관성의 어려움: 테일윈드를 사용하는 여러 개발자가 각자 다른 방식으로 클래스를 조합하면 결과적으로 디자인의 일관성이 어려워질 수 있습니다.
 
+
+< JWT token 을 localStorage & cookie 저장의 차이 >
+
+### localStorage
+
+* CSRF 공격에는 안전하다.
+
+그 이유는 자동으로 request에 담기는 쿠키와는 다르게
+js 코드에 의해 헤더에 담기므로 XSS를 뚫지 않는 이상
+공격자가 정상적인 사용자인 척 request를 보내기가 어렵다.
+
+* XSS에 취약하다.
+* 
+공격자가 localStorage에 접근하는 Js 코드 한 줄만 주입하면
+localStorage를 공격자가 내 집처럼 드나들 수 있다.
+
+### cookie
+
+* XSS 공격으로부터 localStorage에 비해 안전하다.
+
+쿠키의 httpOnly 옵션을 사용하면 Js에서 쿠키에 접근 자체가 불가능하다.
+그래서 XSS 공격으로 쿠키 정보를 탈취할 수 없다.
+
+* CSRF 공격에 취약하다.
+* 
+자동으로 http request에 담아서 보내기 때문에
+공격자가 request url만 안다면
+사용자가 관련 link를 클릭하도록 유도하여 request를 위조하기 쉽다.
+
+### 그래서 ?
+
+refresh token을 사용하는 방법이 있다.
+
+이런 방식을 사용하는 경우,
+refresh token이 CSRF에 의해 사용된다 하더라도
+공격자는 accessToken을 알 수 없다.
+
+CSRF는 피해자의 컴퓨터를 제어할 수 있는 것이 아니기 때문이다.
+요청을 위조하여 피해자가 의도하지 않은
+서버 동작을 일으키는 공격방법이기 때문에
+refresh token을 통해 받아온 response(accessToken)는
+공격자가 확인할 수 없다.
+
+따라서 쿠키를 사용하여 XSS를 막고
+refresh token 방식을 이용하여 CSRF를 막을 수 있다.
+
+
