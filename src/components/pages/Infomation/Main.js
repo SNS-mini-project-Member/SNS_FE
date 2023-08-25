@@ -19,7 +19,7 @@ const Main = () => {
       <MainLayout>
         <AsideMenu />
         <StoryBoard />
-        <ChatList />
+        {/*<ChatList />*/}
       </MainLayout>
     </>
   );

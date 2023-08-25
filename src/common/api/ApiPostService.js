@@ -13,3 +13,11 @@ export const sendTmpPw = (email) => apiClient.post(`/api/v1/mail/pwChange`, {ema
 export const updatePw = (email, password) => apiClient.post('/api/v1/users/update', {email, password})
 
 export const insertBoard = (userSeq, contents, media) => apiClient.post('/api/v1/boards', {userSeq, contents, media})
+
+export const likeBtn = (userSeq, boardSeq) => apiClient.post('/api/v1/likes', {userSeq, boardSeq})
+
+export const bookBtn = (userSeq, bookSeq) => apiClient.post('/api/v1/book', {userSeq, bookSeq})
+
+export const reCommentBtn = (userSeq, reCommentSeq) => apiClient.post('/api/v1/recomment', {userSeq, reCommentSeq})
+
+export const insertComment = (userSeq, boardSeq, commentData) => apiClient.post('/api/v1/comment', {userSeq, boardSeq, commentData})

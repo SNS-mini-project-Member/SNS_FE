@@ -5,7 +5,8 @@ import jj from "../../../asset/img/jj3.webp";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useSelector} from "react-redux";
-import {insertBoard} from "../../../common/api/ApiPostService";
+import {bookBtn, insertBoard, insertComment, likeBtn, reCommentBtn} from "../../../common/api/ApiPostService";
+import {commentBtn} from "../../../common/api/ApiGetService";
 const StoryBoard = () => {
   const [videoPlayStatus, setVideoPlayStatus] = useState([]);
   const videoRefs = useRef([]);
@@ -17,7 +18,15 @@ const StoryBoard = () => {
   const [showReplyInput, setShowReplyInput] = useState(false); // State for reply input visibility
   const isLogin = useSelector(state => state.loginCheck.loginInfo);
   const [boardData, setBoardData] = useState([]);
+  const [bookData, setBookData] = useState([]);
+  const [commentData, setCommentData] = useState([]);
+  const [reCommentData, setReCommentData] = useState([]);
+  const [observer, setObserver] = useState(false);
+  const [boardSeq, setBoardSeq] = useState('');
+  const [board, setBoard] = useState({});
+  const [img ,setImg] = useState('');
 
+  // 게시물 화면 보여지게 하는 것
   useEffect(() => {
     axios.get('http://localhost:8080/api/v1/board')
         .then((response) => {
@@ -27,7 +36,8 @@ const StoryBoard = () => {
         .catch((err) => {
           console.log(err);
         });
-  }, [])
+  }, [observer])
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,6 +75,48 @@ const StoryBoard = () => {
     // createBoard 메소드 실행 시 모달 열기
     setIsModalOpen(true);
   };
+  const onClickLike = (boardSeq) => {
+    likeBtn(isLogin.userSeq, boardSeq).then((res) =>{
+      setObserver(!observer);
+    }).catch((err) => {
+    })
+  }
+
+  const onClickBook = (bookSeq) => {
+
+    bookBtn(isLogin.userSeq, bookSeq).then((res) => {
+      setObserver(!observer);
+    }).catch((err) => {
+    })
+  }
+
+  const onClickComment = (item) => {
+
+    setBoardSeq(item.boardSeq);
+
+    const obj = {
+      comment : item.comment
+    }
+
+    obj.comment.userName = item.userBoards.userName;
+
+    console.log(obj)
+
+    setBoard(obj);
+
+    commentBtn(item.boardSeq).then((res) =>{
+      setObserver(!observer);
+    }).catch((err) =>{
+    })
+  }
+
+  const onClickReComment = (ReCommentSeq) => {
+    reCommentBtn(isLogin.userSeq, ReCommentSeq).then((res) =>{
+      setObserver(!observer);
+    }).catch((err) =>{
+    })
+  }
+
 
   const closeModal = () => {
     // 모달 닫기
@@ -84,21 +136,67 @@ const StoryBoard = () => {
   };
 
   const handleAttachmentChange = (e) => {
-    const file = e.target.files[0];
-    setAttachment(file);
+    setImg(e.target.value);
+
   };
   const handleSubmit = () => {
     // 게시글 내용과 첨부 파일 제출 처리
-    console.log("게시글 내용:", content);
-    console.log("첨부 파일:", attachment);
-    debugger
-    insertBoard(isLogin.userSeq,content, attachment)
+    insertBoard(isLogin.userSeq,content, img).then((res) => {
+      setObserver(!observer)
+    }).catch((err) => {
+
+    })
     closeModal();
   };
 
   const openReplyInput = () => {
     setShowReplyInput(!showReplyInput);
   };
+  const onChangeComment = (e) => {
+    setCommentData(e.target.value);
+  }
+  const onClickInsertComment = () => {
+
+    insertComment(isLogin.userSeq, boardSeq, commentData).then((res) => {
+      //
+      axios.get('http://localhost:8080/api/v1/board')
+      .then((response) => {
+
+        console.log(boardSeq)
+
+        response.data.forEach((item, idx) => {
+          if (item.boardSeq == boardSeq) {
+
+            const obj = {
+              comment : item.comment
+            }
+
+            obj.comment.userName = item.userBoards.userName;
+
+            obj.comment.commentContent = '댓글 생성중..';
+
+
+            setBoard(prevBoard => ({
+              ...prevBoard,
+              comment: [...prevBoard.comment, item.comment]
+            }));
+
+            window.location.reload();
+          }
+        })
+
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+
+    }).catch((err) => {
+      console.log(err)
+    })
+
+  }
 
   return (
     <div className={classes.storyBoardWrap}>
@@ -114,7 +212,7 @@ const StoryBoard = () => {
           <p>사진을 공유하거나 글을 남겨보세요.</p>
         </div>
       </div>
-      {boardData.map((item, idx) => (
+      {boardData != undefined && boardData.map((item, idx) => (
           <div key={idx} className={classes.createBoard2}>
             <div className={classes.titleWrap}>
               <h2 className={classes.suggestion}>추천 게시물</h2>
@@ -124,133 +222,38 @@ const StoryBoard = () => {
                 <img loading="lazy" className={classes.img} src={jj} />
               </div>
               <div>
-                <h2>{item.user.userName}</h2>
-                <p>{item.user.createdAt}</p>
+                <h2>{item.userBoards.userName}</h2>
+                <p>{item.userBoards.createdAt}</p>
               </div>
             </div>
             <div className={classes.description}>
               <p>{item.contents}</p>
             </div>
             <div className={classes.videoArea}>
-              <img loading="lazy" src={ff} />
+              <img loading="lazy" src={item.media} />
             </div>
             <div className={classes.likeArea}>
               <div className={classes.likeAreaLeft}>
                 <div className={classes.likeFlex}>
-                  <span>1,245</span>
-                  <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/like.svg?alt=media&token=57793a04-e2df-4f9c-abe5-2445f83e4a57" />
+                  <span>{item.boardLikeEntityList.length}</span>
+                  <img onClick={() => onClickLike(item.boardSeq)} loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/like.svg?alt=media&token=57793a04-e2df-4f9c-abe5-2445f83e4a57" />
                 </div>
               </div>
               <div className={classes.likeAreaRight}>
                 <div className={classes.likeFlex}>
-                  <span>1,245</span>
-                  <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/bookmark.png?alt=media&token=bd0b81ce-e724-47a7-9556-75a48130dc3d" />
+                  <span>{item.book.length}</span>
+                  <img onClick={() => onClickBook(item.boardSeq)} loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/bookmark.png?alt=media&token=bd0b81ce-e724-47a7-9556-75a48130dc3d" />
                 </div>
                 <div className={classes.comentFlex} onClick={openCommentModal}>
-                  <span>2,345</span>
-                  <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />
+                  <span>{item.comment.length}</span>
+                  {/*<img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />*/}
+                  <img onClick={() => onClickComment(item)} loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />
                 </div>
+
               </div>
             </div>
           </div>
       ))}
-
-      {/*<div className={classes.createBoard2}>*/}
-      {/*  <div className={classes.titleWrap}>*/}
-      {/*    <h2 className={classes.suggestion}>추천 게시물</h2>*/}
-      {/*  </div>*/}
-      {/*  <div className={classes.flexStyle}>*/}
-      {/*    <div>*/}
-      {/*      <img loading="lazy" className={classes.img} src='https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/testImg.png?alt=media&token=10879be7-cee5-4e1a-899a-604120643f9b' />*/}
-      {/*    </div>*/}
-      {/*    <div>*/}
-      {/*      <h2>대한민국 경찰청</h2>*/}
-      {/*      <p>8월 14일 오후 2:43</p>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*  <div className={classes.description}>*/}
-      {/*    <p>“알고보니 사기꾼이었다…” 8억시계 찼던 추성훈 통장잔고 확인해보니 20만원, 충격적인 고백에 모두가 경악한 진짜 이유..</p>*/}
-      {/*  </div>*/}
-      {/*  <div className={classes.videoArea}>*/}
-      {/*    /!*<video*!/*/}
-      {/*    /!*  ref={(ref) => videoRefs.current.push(ref)}*!/*/}
-      {/*    /!*  style={{ width: "100%", height: "100%" }}*!/*/}
-      {/*    /!*  controls*!/*/}
-      {/*    /!*  autoPlay*!/*/}
-      {/*    /!*>*!/*/}
-      {/*    /!*  <source*!/*/}
-      {/*    /!*    src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/news.mp4?alt=media&token=6ec9f1ff-d518-4ac9-aad0-cf2e7ea077dc"*!/*/}
-      {/*    /!*    type="video/mp4"*!/*/}
-      {/*    /!*  />*!/*/}
-      {/*    /!*</video>*!/*/}
-      {/*  </div>*/}
-      {/*  <div className={classes.likeArea}>*/}
-      {/*    <div className={classes.likeAreaLeft}>*/}
-      {/*      <div className={classes.likeFlex}>*/}
-      {/*        <span>1,245</span>*/}
-      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/like.svg?alt=media&token=57793a04-e2df-4f9c-abe5-2445f83e4a57" />*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*    <div className={classes.likeAreaRight}>*/}
-      {/*      <div className={classes.likeFlex}>*/}
-      {/*        <span>1,245</span>*/}
-      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/bookmark.png?alt=media&token=bd0b81ce-e724-47a7-9556-75a48130dc3d" />*/}
-      {/*      </div>*/}
-      {/*      <div className={classes.comentFlex}>*/}
-      {/*        <span>2,345</span>*/}
-      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
-      {/*<div className={classes.createBoard2}>*/}
-      {/*  <div className={classes.titleWrap}>*/}
-      {/*    <h2 className={classes.suggestion}>추천 게시물</h2>*/}
-      {/*  </div>*/}
-      {/*  <div className={classes.flexStyle}>*/}
-      {/*    <div>*/}
-      {/*      <img loading="lazy" className={classes.img} src='https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/testImg.png?alt=media&token=10879be7-cee5-4e1a-899a-604120643f9b' />*/}
-      {/*    </div>*/}
-      {/*    <div>*/}
-      {/*      <h2>대한민국 경찰청</h2>*/}
-      {/*      <p>8월 14일 오후 2:43</p>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*  <div className={classes.description}>*/}
-      {/*    <p>“알고보니 사기꾼이었다…” 8억시계 찼던 추성훈 통장잔고 확인해보니 20만원, 충격적인 고백에 모두가 경악한 진짜 이유..</p>*/}
-      {/*  </div>*/}
-      {/*  <div className={classes.videoArea}>*/}
-      {/*    /!*<video*!/*/}
-      {/*    /!*  ref={(ref) => videoRefs.current.push(ref)}*!/*/}
-      {/*    /!*  style={{ width: "100%", height: "100%" }}*!/*/}
-      {/*    /!*  controls*!/*/}
-      {/*    /!*  autoPlay*!/*/}
-      {/*    /!*>*!/*/}
-      {/*    /!*  <source*!/*/}
-      {/*    /!*    src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/news.mp4?alt=media&token=6ec9f1ff-d518-4ac9-aad0-cf2e7ea077dc"*!/*/}
-      {/*    /!*    type="video/mp4"*!/*/}
-      {/*    /!*  />*!/*/}
-      {/*    /!*</video>*!/*/}
-      {/*  </div>*/}
-      {/*  <div className={classes.likeArea}>*/}
-      {/*    <div className={classes.likeAreaLeft}>*/}
-      {/*      <div className={classes.likeFlex}>*/}
-      {/*        <span>1,245</span>*/}
-      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/like.svg?alt=media&token=57793a04-e2df-4f9c-abe5-2445f83e4a57" />*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*    <div className={classes.likeAreaRight}>*/}
-      {/*      <div className={classes.likeFlex}>*/}
-      {/*        <span>1,245</span>*/}
-      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/bookmark.png?alt=media&token=bd0b81ce-e724-47a7-9556-75a48130dc3d" />*/}
-      {/*      </div>*/}
-      {/*      <div className={classes.comentFlex}>*/}
-      {/*        <span>2,345</span>*/}
-      {/*        <img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
 
       {/* 모달 컨텐츠 */}
       {isModalOpen && (
@@ -263,11 +266,11 @@ const StoryBoard = () => {
               placeholder="게시글 내용을 입력하세요"
             />
             <input
-              type="file"
-              accept="image/*, video/*"
+              type="text"
+              style={{border : '1px solid', marginRight: '10px'}}
               onChange={handleAttachmentChange}
             />
-            <button onClick={handleSubmit}>작성</button>
+            <button onClick={handleSubmit}>img주소 작성</button>
             <button onClick={closeModal}>닫기</button>
           </div>
         </div>
@@ -281,41 +284,37 @@ const StoryBoard = () => {
             <div className={classes.commentsContainer}>
               {/* Comment */}
               <div className={classes.commentWrap}>
-                <div className={classes.comment}>
-                  <div className={classes.commentHeader}>
-                    <p className={classes.commentAuthor}>김정수</p>
-                    <button onClick={openReplyInput} className={classes.replyButton}>답글쓰기</button>
-                  </div>
-                  <div style={{width : '100%', display : 'flex', justifyContent : 'space-between', alignItems : 'center'}}>
-                    <p className={classes.commentText}>스쿼드 진짜 구리다</p>
-                    <div className={classes.commentActions}>
-                      {/* Like button */}
-                      <button style={{display : 'flex', alignItems : 'center'}}  className={classes.likeButton}>
-                        <img
-                          src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/like.svg?alt=media&token=57793a04-e2df-4f9c-abe5-2445f83e4a57"
-                          alt="Like"
-                        />
-                        <span>123</span>
-                      </button>
+                {board.comment != undefined && board.comment.map((item, idx) => (
+                    <div key={idx} className={classes.comment}>
+                      <div className={classes.commentHeader}>
+                        <p className={classes.commentAuthor}>{item.userName}</p>
+                        <button onClick={openReplyInput} className={classes.replyButton}>답글쓰기</button>
+                      </div>
+                      <div style={{width : '100%', display : 'flex', justifyContent : 'space-between', alignItems : 'center'}}>
+                        <p className={classes.commentText}>{item.comment}</p>
+                        {/*<p className={classes.commentText}>{item.comment == null ? '새로고챔 해줘..' : item.comment}</p>*/}
+                        <div className={classes.commentActions}>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                ))}
 
-                </div>
                 {/* Reply */}
-                <div className={classes.reply}>
-                  <div className={classes.commentHeader}>
-                    <p className={classes.commentAuthor}>채오성</p>
-                  </div>
-                  <p className={classes.commentText}>너보단 나을 듯?</p>
-                </div>
-                <div className={classes.reply}>
-                  <div className={classes.commentHeader}>
-                    <p className={classes.commentAuthor}>박성무</p>
-                  </div>
-                  <p className={classes.commentText}>그러게요</p>
-                </div>
+                {/*<div className={classes.reply}>*/}
+                {/*  <div className={classes.commentHeader}>*/}
+                {/*    <p className={classes.commentAuthor}>채오성</p>*/}
+                {/*  </div>*/}
+                {/*  <p className={classes.commentText}>너보단 나을 듯?</p>*/}
+                {/*</div>*/}
+                {/*<div className={classes.reply}>*/}
+                {/*  <div className={classes.commentHeader}>*/}
+                {/*    <p className={classes.commentAuthor}>박성무</p>*/}
+                {/*  </div>*/}
+                {/*  <p className={classes.commentText}>그러게요</p>*/}
+                {/*</div>*/}
+
                 {/* Reply Input */}
-                {showReplyInput && (
+                {/*{showReplyInput && (
                   <div className={classes.replyInput}>
                     <input
                       type="text"
@@ -324,15 +323,19 @@ const StoryBoard = () => {
                     />
                     <button className={classes.replySubmitButton}>등록</button>
                   </div>
-                )}
+                )}*/}
               </div>
             </div>
             <div className={classes.commentForm}>
         <textarea
           className={classes.commentTextarea}
+          onChange={onChangeComment}
           placeholder="Add a comment"
         ></textarea>
-              <button className={classes.commentSubmitButton}>댓글쓰기</button>
+              {/*<span>{item.comment.length}</span>*/}
+              {/*<img loading="lazy" src="https://firebasestorage.googleapis.com/v0/b/my-cdn-d39b2.appspot.com/o/coment%20(1).png?alt=media&token=525ce0da-4368-4d4c-82d1-e170845a6cc9" />*/}
+              {/*<img onClick={() => onClickComment(item.boardSeq)} loading="lazy"*/}
+              <button  onClick={onClickInsertComment} className={classes.commentSubmitButton}>댓글쓰기</button>
             </div>
             <button className={classes.closeButton} onClick={closeCommentModal}>
               Close
