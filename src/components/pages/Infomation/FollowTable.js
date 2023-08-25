@@ -19,6 +19,7 @@ const FollowTable = () => {
     const [showAddFollowModal, setShowAddFollowModal] = useState(false); // 팔로우 추가 모달 표시 여부 상태 추가
     const [newFollowName, setNewFollowName] = useState(""); // 입력된 새 팔로우 이름 상태 추가
     const isLogin = useSelector(state => state.loginCheck.loginInfo);
+    const [observer, setObserver] = useState(false);
 
     useEffect(() => {
         apiGetFollowresult()
@@ -29,7 +30,7 @@ const FollowTable = () => {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [observer]);
 
 
     const handDeleteFollow = (followId) => {
@@ -51,7 +52,6 @@ const FollowTable = () => {
     };
 
     const confirmAddFollow = () => {
-        debugger
         // 팔로우 검색 메소드 호출
         apiSearchFollow(newFollowName) //
             .then((searchResult) => {
@@ -59,7 +59,6 @@ const FollowTable = () => {
                     console.log("유저를 찾을 수 없습니다.");
                     return;
                 }
-                debugger
 
                 const followUserId= searchResult.data.userId;
                 const loggedInUserId = isLogin.userSeq; // 현재 로그인한 유저의 userId
@@ -74,7 +73,7 @@ const FollowTable = () => {
                     loggedInUserId
                 }
 
-                // 친구 추가
+                // 팔로우추가
                 apiAddFollow(followingRequest, followerRequest)
                     //apiAddFollow(followShipRequest(loggedInUserId,followUserId), null, followReqRequest(followUserId,loggedInUserId))
                     .then((res) => {
@@ -85,7 +84,8 @@ const FollowTable = () => {
                         // 친구 추가 성공 후 친구 목록 갱신
                         apiGetresult()
                             .then((res) => {
-                                setFollowData(res.data.content);
+                                console.log(res.data.content);
+                                setObserver(!observer);
                             })
                             .catch((err) => {
                                 console.log(err);
@@ -96,6 +96,7 @@ const FollowTable = () => {
                     });
             })
             .catch((err) => {
+                debugger
                 console.log("팔로우 검색 실패:", err);
             });
     };
@@ -124,13 +125,13 @@ const FollowTable = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {follow.map((item) => (
-                            <tr key={item.userSeq}>
-                                <td>{item.userName}</td>
-                                <td>{item.userEmail}</td>
-                                <td>{item.userAge}</td>
-                                <td>{item.userPhone}</td>
-                                <td>{item.followingCount}</td>
+                        {follow.map((item, idx) => (
+                            <tr key={idx}>
+                                <td>{item.followerName}</td>
+                                <td>{item.followerEmail}</td>
+                                <td>{item.followerAge}</td>
+                                <td>{item.followerPhone}</td>
+                                <td>{follow.length}</td>
                                 <td>
                                     <button onClick={() => handDeleteFollow(item.userId)}
                                             disabled={selectedFollowId === item.userId}>

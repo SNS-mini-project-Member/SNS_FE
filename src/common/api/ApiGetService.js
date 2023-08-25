@@ -34,13 +34,13 @@ export const apiDeleteFollow = (friendShipId) => apiClient.delete(`api/v1/friend
 export const apiAddFollow = (followingRequest, followerRequest) => apiClient.post('api/v1/follow/addFollowers', {
     followingRequest : {
         userId : followingRequest.loggedInUserId,
-        followingId : followingRequest.friendUserId
+        followingId : followingRequest.followUserId
     },
     followerRequest : {
-        userId : followerRequest.friendUserId,
+        userId : followerRequest.followUserId,
         followerUserId : followingRequest.loggedInUserId
     }
 });
 
 
-export const apiSearchFollow = (followName) => apiClient.get(`api/v1/follow/`)
+export const apiSearchFollow = (followName) => apiClient.get(`api/v1/follow/followerByName/${followName}`)
