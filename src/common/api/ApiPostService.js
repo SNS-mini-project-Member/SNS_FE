@@ -14,6 +14,7 @@ export const updatePw = (email, password) => apiClient.post('/api/v1/users/updat
 
 export const insertBoard = (userSeq, contents, media) => apiClient.post('/api/v1/boards', {userSeq, contents, media})
 
+<<<<<<< HEAD
 export const likeBtn = (userSeq, boardSeq) => apiClient.post('/api/v1/likes', {userSeq, boardSeq})
 
 export const bookBtn = (userSeq, bookSeq) => apiClient.post('/api/v1/book', {userSeq, bookSeq})
@@ -23,4 +24,3 @@ export const reCommentBtn = (userSeq, reCommentSeq) => apiClient.post('/api/v1/r
 export const insertComment = (userSeq, boardSeq, commentData) => apiClient.post('/api/v1/comment', {userSeq, boardSeq, commentData})
 
 export const validToken = (token) => apiClient.post('/api/v1/users/validToken', {token})
-

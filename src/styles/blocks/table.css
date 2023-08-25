@@ -1,0 +1,61 @@
+/* 친구 목록 테이블 스타일 */
+
+.table-container {
+    background-color: #d3e0ea;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    font-family: 'Noto Sans', sans-serif;
+    text-align: center;
+}
+
+.table-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #3498db; /* 파란색 */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    background-color: #b0c5d1;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid #8e9ead;
+}
+
+tbody td {
+    padding: 10px;
+    font-size: 12px;
+    border-bottom: 1px solid #8e9ead;
+}
+
+tbody tr:hover {
+    background-color: #e1e9f0;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f3f7fa;
+}
+
+.button {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #2184c1;
+}

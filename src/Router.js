@@ -7,6 +7,8 @@ import SendTmpPw from "./components/pages/Login/SendTmpPw";
 import FriendsMenu from "./components/pages/Infomation/FriendsMenu";
 import FriendsRequest from "./components/pages/Layout/FriendsRequest";
 import AllFriends from "./components/pages/Layout/AllFriends";
+import FriendTable from "./components/pages/Infomation/FriendTable";
+import FollowTable from "./components/pages/Infomation/FollowTable";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
   {
     path : 'allFriends',
     element : <AllFriends />,
+  },
+  {
+    path : 'friend',
+    element : <FriendTable />,
+  },
+  {
+    path : 'follow',
+    element : <FollowTable />,
   },
 ]);
 
